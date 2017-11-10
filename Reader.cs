@@ -50,6 +50,7 @@ namespace Theory_of_game
             for (; true;)
             {
                 number = number + imput[reading_mark];
+                if (reading_mark + 1 == imput.Length){ break; }
                 if (imput[reading_mark + 1] == '1' || imput[reading_mark + 1] == '2' || imput[reading_mark + 1] == '3' || imput[reading_mark + 1] == '4' || imput[reading_mark + 1] == '5' || imput[reading_mark + 1] == '6' || imput[reading_mark + 1] == '7' || imput[reading_mark + 1] == '8' || imput[reading_mark + 1] == '9' || imput[reading_mark + 1] == '0') { reading_mark++; }
                 else { break; }
             }
@@ -96,7 +97,7 @@ namespace Theory_of_game
 
             for (int mark = 0; mark < markofmass;)
             {
-                if (read[mark] < 0 && (read[mark] != -1 || read[mark] != -2))// это знак 
+                if (read[mark] < 0 && (read[mark] != -1 && read[mark] != -2))// это знак 
                 {
 
                     yrav.rezylt.Add(byffermark);
@@ -122,8 +123,8 @@ namespace Theory_of_game
                 if (read[mark] >= 0 )// это число
                 {
                     yrav.rezylt.Add(byffermark);
+                    yrav.A.Add(-yrav.constants.Count);
                     yrav.constants.Add(read[mark]);
-                    yrav.A.Add(-yrav.constants.Capacity);
                     if (mark + 1 < markofmass) { mark++; } else {
                         yrav.Simbol.Add(-4);
                         yrav.B.Add(0);

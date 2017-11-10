@@ -20,6 +20,7 @@
 
                 mark--;
             }
+
             return (bufer[1]);
         }
 
@@ -40,7 +41,7 @@
       * 10-)
       * дополнить функции
       */
-            switch (formula.B[mark])
+            switch (formula.Simbol[mark])
             {
                 case -4:
                     if (!Atupe && !Btupe) { return (bufer[formula.A[mark]] + bufer[formula.B[mark]]); }

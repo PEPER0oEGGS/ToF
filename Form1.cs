@@ -16,7 +16,9 @@ namespace Theory_of_game
         {
             InitializeComponent();
         }
+
         Formula formula = new Formula();
+
         public double funk(double wx, double wy)
         {
             Calkuer calkuer = new Calkuer();
@@ -24,12 +26,6 @@ namespace Theory_of_game
             formula.constants[2] = wx;
             return (calkuer.Calculation(formula));
         }
-
-        public double NoMarks(double wx, double wy)
-        {
-            return 0;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             int n = 0, nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
@@ -39,7 +35,7 @@ namespace Theory_of_game
             reader.input_string(function);
             formula = reader.Reading();
            //Получение значений n,nps,eps,c1,c2,c3,c4 из текстбоксов
-           n = int.Parse(textBox1.Text);
+            n = int.Parse(textBox1.Text);
             nmax = int.Parse(textBox2.Text);
             eps = double.Parse(textBox3.Text);
             c1 = int.Parse(textBox4.Text);
@@ -66,6 +62,7 @@ namespace Theory_of_game
             {
                 for (int j =0; j < n; j++) {a1[i,j]=funk(c1 + (c2 - c1) * (i - 1), c3 + (c4 - c3) * (j - 1)); } //функция выбирается через checkbox
             }
+           
             // метка 57 (Собираем массив А)
             double omax = 1000000;
             double omin = 0;
