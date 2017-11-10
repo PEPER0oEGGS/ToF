@@ -14,7 +14,11 @@ namespace Theory_of_game
         string imput = "x^(2*(y+3)-54)-((2*y^2))";
         int reading_mark = 0;
         int[] read = new int[1000];
-
+        //метод для изменения строки
+        public void input_string(string input)
+        {
+            imput = input;
+        }
         public Formula Reading()
         {
             int mark = 0;
@@ -81,6 +85,7 @@ namespace Theory_of_game
             return (3); // ошибка чтения
         }
 
+        
         void listCreated(int markofmass)
         {
             int byffermark = 1;// текущая константа 

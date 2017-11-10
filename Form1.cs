@@ -34,9 +34,10 @@ namespace Theory_of_game
         {
             int n = 0, nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
             double eps = 0;
-
+            string function = textBox9.Text;
             Reader reader = new Reader();
-            formula= reader.Reading();
+            reader.input_string(function);
+            formula = reader.Reading();
            //Получение значений n,nps,eps,c1,c2,c3,c4 из текстбоксов
            n = int.Parse(textBox1.Text);
             nmax = int.Parse(textBox2.Text);
