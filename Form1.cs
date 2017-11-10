@@ -16,19 +16,16 @@ namespace Theory_of_game
         {
             InitializeComponent();
         }
-        public float funk(float wx, float wy)
+        Formula formula = new Formula();
+        public double funk(double wx, double wy)
         {
-            //Функции выбираются из заданных ниже
-            if (checkBox1.Checked) { return (float)Math.Sqrt(wx * wx + wy * wy); }
-            if (checkBox2.Checked) { return (float)Math.Sqrt(wx * wx + wy * wy); }
-            if (checkBox3.Checked) { return (float)Math.Sqrt(wx * wx + wy * wy); }
-            if (checkBox4.Checked) { return (float)Math.Sqrt(wx * wx + wy * wy); }
-            if (checkBox5.Checked) { return (float)Math.Sqrt(wx * wx + wy * wy); }
-            if (checkBox6.Checked) { return (float)Math.Sqrt(wx * wx + wy * wy); }
-            return 0;
+            Calkuer calkuer = new Calkuer();
+            formula.constants[1] = wx;
+            formula.constants[2] = wx;
+            return (calkuer.Calculation(formula));
         }
 
-        public float NoMarks(float wx, float wy)
+        public double NoMarks(double wx, double wy)
         {
             return 0;
         }
@@ -36,29 +33,32 @@ namespace Theory_of_game
         private void button1_Click(object sender, EventArgs e)
         {
             int n = 0, nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
-            float eps = 0;
-            //Получение значений n,nps,eps,c1,c2,c3,c4 из текстбоксов
-            n = int.Parse(textBox1.Text);
+            double eps = 0;
+
+            Reader reader = new Reader();
+            formula= reader.Reading();
+           //Получение значений n,nps,eps,c1,c2,c3,c4 из текстбоксов
+           n = int.Parse(textBox1.Text);
             nmax = int.Parse(textBox2.Text);
-            eps = float.Parse(textBox3.Text);
+            eps = double.Parse(textBox3.Text);
             c1 = int.Parse(textBox4.Text);
             c2 = int.Parse(textBox5.Text);
             c3 = int.Parse(textBox6.Text);
             c4 = int.Parse(textBox7.Text);
             //Объявление основных используемых переменных
-            float[] x = new float[n];
-            float[] x1 = new float[n];
-            float[] y = new float[n];
-            float[] y1 = new float[n];
-            float[] pc = new float[n];
-            float[] fi = new float[n];
-            float[] x2 = new float[n];
-            float[] y2 = new float[n];
-            float[] d = new float[n];
-            float[,] z1 = new float[n,9];
-            float[,] a1 = new float[n,n];
+            double[] x = new double[n];
+            double[] x1 = new double[n];
+            double[] y = new double[n];
+            double[] y1 = new double[n];
+            double[] pc = new double[n];
+            double[] fi = new double[n];
+            double[] x2 = new double[n];
+            double[] y2 = new double[n];
+            double[] d = new double[n];
+            double[,] z1 = new double[n,9];
+            double[,] a1 = new double[n,n];
             int ai = 1, ai1 = 0, ai2 = 0, ai3 = 0, ai4 = 0;
-            float dx = (c2 - c1) / (n - 1), dy = (c4 - c3) / (n - 1);
+            double dx = (c2 - c1) / (n - 1), dy = (c4 - c3) / (n - 1);
             int i3=-1, i4;
 
             for (int i=0; i < n; i++)
@@ -66,8 +66,8 @@ namespace Theory_of_game
                 for (int j =0; j < n; j++) {a1[i,j]=funk(c1 + (c2 - c1) * (i - 1), c3 + (c4 - c3) * (j - 1)); } //функция выбирается через checkbox
             }
             // метка 57 (Собираем массив А)
-            float omax = 1000000;
-            float omin = 0;
+            double omax = 1000000;
+            double omin = 0;
 
             bool repit = true; //baka! Не юзай метки.
             for (; repit;)
@@ -92,9 +92,9 @@ namespace Theory_of_game
 
                 y[g] = y[g] + 1;
 
-                float omax1 = pc[k] / ai;
-                float omin1 = fi[g] / ai;
-                float c, r;
+                double omax1 = pc[k] / ai;
+                double omin1 = fi[g] / ai;
+                double c, r;
                 if ((omax - omax1) < 0)
                 {
                     omax = omax1; ai1 = ai;
@@ -157,7 +157,7 @@ namespace Theory_of_game
                 }
             }
                 //печать i3,ai,ai2,ai3,ai4
-                float F = (omax + omin) / 2;
+                double F = (omax + omin) / 2;
                 //печать f, omax, omin
                 for(int i = 1; i < n; i++)
                 {
