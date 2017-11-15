@@ -166,7 +166,7 @@ namespace Theory_of_game
                 }
             //вывод констант 
             textBox8.Multiline = true;
-            textBox8.Text += "Вычисленные значения:" + Environment.NewLine;
+            textBox8.Text = "Вычисленные значения:" + Environment.NewLine;
             textBox8.Text += "i3 = " + i3 +  "; ai = " + ai + "; ai1 = " + ai1 + "; ai2 = " + ai2 + "; ai3 = " + ai3 + "; ai4 = " + ai4 + Environment.NewLine;
             textBox8.Text += "f = " + F + "; omax" + omax + "; omin = " + omin +  Environment.NewLine;
             //Вывод массива
@@ -179,7 +179,34 @@ namespace Theory_of_game
                 }
                     textBox8.Text += Environment.NewLine;
             }
-            
+            //переменные для нахождения максимина и минимакса
+            double maxmin = 0, minmax = 0, local_min_j = 0, local_max_i = 0;
+            //поиск наибольшего минимума
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (j == 0) local_min_j = z1[i, j];
+                    if (local_min_j > z1[i, j]) local_min_j = z1[i, j];
+                }
+                if (i == 0) { maxmin = local_min_j; }
+                if (maxmin < local_min_j) { maxmin = local_min_j; }
+            }
+            //поиск наименьшего максимума
+            for (int j = 0; j < n; j++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    if (i == 0) local_min_j = z1[i, j];
+                    if (local_max_i < z1[i, j]) local_max_i = z1[i, j];
+                }
+                if (j == 0) { minmax = local_max_i; }
+                if (minmax > local_max_i) { minmax = local_max_i; }
+            }
+            //вывод максимин и минимакс
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "MinMax = " + minmax + "MaxMin = " + maxmin;
+            textBox8.Text += Environment.NewLine;
         }
     }
 }
