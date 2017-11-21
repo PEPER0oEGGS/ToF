@@ -24,7 +24,7 @@ namespace Theory_of_game
         {
             Calkuer calkuer = new Calkuer();
             formula.constants[1] = wx;
-            formula.constants[2] = wx;
+            formula.constants[2] = wy;
             return (calkuer.Calculation(formula));
         }
         private void button1_Click(object sender, EventArgs e)
@@ -61,7 +61,10 @@ namespace Theory_of_game
 
             for (int i=0; i < n; i++)
             {
-                for (int j =0; j < n; j++) {a1[i,j]=funk(c1 + (c2 - c1) * (i - 1), c3 + (c4 - c3) * (j - 1)); } //функция выбирается через checkbox
+                for (int j =0; j < n; j++)
+                {
+                    a1[i,j]=funk(c1 + (c2 - c1) * (i - 1), c3 + (c4 - c3) * (j - 1));
+                } //функция выбирается через checkbox
             }
            
             // метка 57 (Собираем массив А)
@@ -90,7 +93,7 @@ namespace Theory_of_game
                 for (int j = 0; j < n; j++)// J1
                 {
                     fi[j] = fi[j] + a1[I, j];
-                    if (fi[j] <= fi[J]) J = j;// если J (элемент строки) не мax, то J=j   Fi - вектор второго игрока
+                    if (fi[j] >= fi[J]) J = j;// если J (элемент строки) не мax, то J=j   Fi - вектор второго игрока
                 } //метка 3
 
                 y[J] = y[J] + 1; // x имеет размерность количества столбцов и показывает сколько раз был выбранн J-й столбец 
@@ -98,7 +101,7 @@ namespace Theory_of_game
                 double omax1 = pc[I] / ai; //Уточнили условия в начале min U(n))/n
                 double omin1 = fi[J] / ai; //Уточнили условия в начале max V(n))/n
                 // метка 6
-                if ((omax - omax1) < 0) //  зачем то сравниваем начальные условия  
+                if ((omax - omax1) >= 0) //  зачем то сравниваем начальные условия  
                 {
                     omax = omax1; // уточнили начальное условие  
                     ai1 = ai; // определили ai1
@@ -116,9 +119,9 @@ namespace Theory_of_game
                     //метка 7
 
 
-                    for (int i = 1; i < n; i++) //(i2) поправка на счет с нуля 
+                    for (int i = 1; i < n; i++) //(i2) поправка на счет с нуля Было:"i < n"
                     {
-                        i3 = n + 1 - i; // нужна ли поправка? 2->1?
+                        i3 = n - i; // нужна ли поправка? 2->1? Было:"i3 = n + 1 - i;"
                         i4 = i3 - 1;
                         z1[i3, 5] = z1[i4, 5];
                         z1[i3, 6] = z1[i4, 6];
@@ -143,7 +146,7 @@ namespace Theory_of_game
 
                     for (int i = 1; i < n; i++) //(i2) поправка
                     {
-                        i3 = n + 1 - i; // нужна ли поправка
+                        i3 = n - i; // нужна ли поправка
                         i4 = i3 - 1;
                         z1[i3, 7] = z1[i4, 7];
                         z1[i3, 8] = z1[i4, 8];
@@ -154,7 +157,7 @@ namespace Theory_of_game
                 }
                 ai++;
                 if (ai > nmax){repit = false;}
-                if (Math.Abs(omax - omin) > eps)   {    } // Тут нужно и дти на метку 11 но ее нет
+                if (Math.Abs(omax - omin) < eps)   { repit = false; } // Тут нужно и дти на метку 11 но ее нет
             }
                 //печать i3,ai,ai2,ai3,ai4
                 double F = (omax + omin) / 2;
@@ -188,8 +191,8 @@ namespace Theory_of_game
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (j == 0) local_min_j = z1[i, j];
-                    if (local_min_j > z1[i, j]) local_min_j = z1[i, j];
+                    if (j == 0) local_min_j = a1[i, j];
+                    if (local_min_j > a1[i, j]) local_min_j = a1[i, j];
                 }
                 if (i == 0) { maxmin = local_min_j; }
                 if (maxmin < local_min_j) { maxmin = local_min_j; }
@@ -199,8 +202,8 @@ namespace Theory_of_game
             {
                 for (int i = 0; i < n; i++)
                 {
-                    if (i == 0) local_min_j = z1[i, j];
-                    if (local_max_i < z1[i, j]) local_max_i = z1[i, j];
+                    if (i == 0) local_max_i = a1[i, j];
+                    if (local_max_i < a1[i, j]) local_max_i = a1[i, j];
                 }
                 if (j == 0) { minmax = local_max_i; }
                 if (minmax > local_max_i) { minmax = local_max_i; }
@@ -209,6 +212,26 @@ namespace Theory_of_game
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "MinMax = " + minmax + ";  MaxMin = " + maxmin;
             textBox8.Text += Environment.NewLine;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {            
+            textBox8.Text = "Для работы программы необходимо внести следующие данные:" + Environment.NewLine;
+            textBox8.Text += "n - размерность матрицы [n,n], значение размерности не может превышать 9;" + Environment.NewLine;
+            textBox8.Text += "nmax - максимальное количество игр;eps - погрешность расчета;" + Environment.NewLine;
+            textBox8.Text += "c1, c2, c3, c4 - коэффициенты уравнения;" + Environment.NewLine;
+            textBox8.Text += "Z(x,y) - функция расчета элементов;" + Environment.NewLine;
+            /*textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;
+            textBox8.Text += "" + Environment.NewLine;*/
         }
     }
 }
