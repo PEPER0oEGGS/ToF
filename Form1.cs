@@ -64,6 +64,7 @@ namespace Theory_of_game
             Stack< double>  P1D= new Stack< double> ();
             Stack< double> P2C= new Stack< double>();
             Stack< double>  P2D= new Stack< double> ();
+            Form forma;
             for (int i=0; i < n; i++)
             {
                 for (int j =0; j < n; j++)
@@ -281,6 +282,8 @@ namespace Theory_of_game
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "MinMax = " + minmax + ";  MaxMin = " + maxmin;
             textBox8.Text += Environment.NewLine;
+            forma = new Form2(a1);
+            forma.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)

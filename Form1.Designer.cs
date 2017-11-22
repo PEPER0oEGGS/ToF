@@ -188,7 +188,7 @@
             this.textBox8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox8.Multiline = true;
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(484, 208);
+            this.textBox8.Size = new System.Drawing.Size(484, 299);
             this.textBox8.TabIndex = 16;
             // 
             // label8
@@ -222,7 +222,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(579, 491);
+            this.ClientSize = new System.Drawing.Size(579, 582);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label8);
