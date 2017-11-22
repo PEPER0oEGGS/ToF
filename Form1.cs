@@ -131,7 +131,7 @@ namespace Theory_of_game
                     z1[1, 6] = d[K];
                 }
                 //метка 8 она же 5
-                if ((omin - omin1) < 0)
+                if ((omin - omin1) <= 0)
                 {
                     omin = omin1;
                     ai2 = ai; ai4++;
@@ -162,7 +162,7 @@ namespace Theory_of_game
                 //печать i3,ai,ai2,ai3,ai4
                 double F = (omax + omin) / 2;
                 //печать f, omax, omin
-                for(int i = 1; i < n; i++)
+                for(int i = 0; i < n; i++)
                 {
                     z1[i, 1] = x1[i];
                     z1[i, 2] = c4 + (i - 1) * dy;
