@@ -3,12 +3,12 @@
     public class Calkuer
     {
         Formula formula = new Formula();
-        double[] bufer = new double[1000];
+         double[] bufer = new  double[1000];
         bool Atupe = true;
         bool Btupe = true;
 
 
-        public double Calculation(Formula f)
+        public  double Calculation(Formula f)
         {
             formula = f;
             for (int mark = formula.rezylt.Count-1; mark >=0;)
@@ -24,7 +24,7 @@
             return (bufer[1]);
         }
 
-        double Operation(int mark)
+         double Operation(int mark)
         {
 
             /* 
