@@ -59,6 +59,17 @@ namespace Theory_of_game
             double[] y2 = new double[n];
             double[] d = new double[n];
             double[,] z1 = new double[n,9];
+
+            Stack< double> P1C = new Stack< double> ();
+            Stack< double>  P1D= new Stack< double> ();
+            Stack< double> P2C= new Stack< double>();
+            Stack< double>  P2D= new Stack< double> ();
+            double omax1;
+            double omin1;
+
+            // Form forma;
+
+
             if (textBox10.Text == "")
             {
                 a1 = new double[n, n];
@@ -81,41 +92,39 @@ namespace Theory_of_game
             double omax = 1000000; //~ max V(n))/n 
             double omin = 0; //~(min U(n))/n 
 
-            int J=(n + 1) / 2; // случайно выбраный столбец (+ его инициализация)
+            int J=(n + 1) / 2-1; // случайно выбраный столбец (+ его инициализация)
             int I=0; // инициализация константы со строкой.
              double C=0;
             int K=0; // надо сейвить до цикла
-            bool repit = true; //baka! Не юзай метки.
-            for (; repit;)
+             //baka! Не юзай метки
+            for (bool repit = true; repit;)
             {
-                I = 0;//I у нас счет с нуля, или поправку делай на массивы
+                I = 0; // Выбрали первый элемент столбца 
 
-                for (int i = 0; i < n; i++) // I1
-                {
-                    pc[i] = pc[i] + a1[i,J] ;
-                    if (pc[i] <= pc[I]){ I = i;}// если I (элемент столбца) не минимальный, то I=i   pc - вектор первого игрока
-                }//метка 1
+                for (int i = 0; i < n; i++) // перебираем столбец и ищем минимальный
+                { pc[i] = pc[i] + a1[J,i] ; // Вектор = вектор + элементы J строки 
+                if (pc[i] <= pc[I]){ I = i;}// если I (элемент столбца) не минимальный, то I=i   pc - вектор первого игрока
+                }
 
                 x[I] = x[I] + 1; // x имеет размерность количества строк и показывает сколько раз была выбранна I-я строка 
 
-                J = 0;//запомнили первый столбец
+                J = 0; //запомнили первый столбец
 
-                for (int j = 0; j < n; j++)// J1
-                {
-                    fi[j] = fi[j] + a1[I, j];
-                    if (fi[j] >= fi[J]) J = j;// если J (элемент строки) не мax, то J=j   Fi - вектор второго игрока
-                } //метка 3
+                for (int j = 0; j < n; j++) //перебираем строку и ищем минимальное
+                {fi[j] = fi[j] + a1[j, I]; // Вектор = вектор + элементы I стотбца 
+                 if (fi[j] >= fi[J]){J = j;} // если J (элемент строки) не мax, то J=j   Fi - вектор второго игрока
+                } 
 
-                y[J] = y[J] + 1; // x имеет размерность количества столбцов и показывает сколько раз был выбранн J-й столбец 
+                 y[J] = y[J] + 1; // x имеет размерность количества столбцов и показывает сколько раз был выбранн J-й столбец 
+                 
+                 omax1 = pc[I] / ai; //Уточнили условия в начале min U(n))/n
+                 omin1 = fi[J] / ai; //Уточнили условия в начале max V(n))/n
 
-                double omax1 = pc[I] / ai; //Уточнили условия в начале min U(n))/n
-                double omin1 = fi[J] / ai; //Уточнили условия в начале max V(n))/n
-                // метка 6
-                if ((omax - omax1) >= 0) //  зачем то сравниваем начальные условия  
+               if ((omax - omax1) >= 0) //  зачем то сравниваем начальные условия  
                 {
                     omax = omax1; // уточнили начальное условие  
-                    ai1 = ai; // определили ai1
-                    ai3++;
+                    ai1 = ai; //Запомнили ПОСЛЕДНИЙ такт на котором было изменение 
+                    ai3++; // общее количество изменений (омах)
                     C = 0; K = 0; //поправка на счет с нуля 
                     for (int i = 0; i < n; i++) //(i2) поправка на счет с нуля 
                     {
@@ -123,30 +132,20 @@ namespace Theory_of_game
                         d[i] = Math.Abs(x1[i] - x2[i]);
                         C += d[i];
                         x2[i] = x1[i];
-
-                        if (d[i] > d[K]){ K = i;}
+                        if (d[i] > d[K]){ K = i;}  // выбрали минимальный К
                     }
                     //метка 7
+                    P1C.Push(C);
+                    P1D.Push(d[K]);
+                    //Запомнили минимумы
 
-
-                    for (int i = 1; i < n; i++) //(i2) поправка на счет с нуля Было:"i < n"
-                    {
-                        i3 = n - i; // нужна ли поправка? 2->1? Было:"i3 = n + 1 - i;"
-                        i4 = i3 - 1;
-                        z1[i3, 5] = z1[i4, 5];
-                        z1[i3, 6] = z1[i4, 6];
-                    }
-                    //метка 71
-                    z1[1, 5] = C;
-                    z1[1, 6] = d[K];
                 }
-                //метка 8 она же 5
                 if ((omin - omin1) <= 0)
                 {
                     omin = omin1;
                     ai2 = ai; ai4++;
                     C = 0;  K = 0;
-                    for (int i = 0; i < n; i++) //(i2) поправка 
+                    for (int i = 0; i < n; i++) 
                     {
                         y1[i] = y[i] / ai;
                         d[i] = Math.Abs(y1[i] - y2[i]);
@@ -154,45 +153,84 @@ namespace Theory_of_game
                         if (d[i] > d[K]) K = i;
                     } //метка 10
 
-                    for (int i = 1; i < n; i++) //(i2) поправка
-                    {
-                        i3 = n - i; // нужна ли поправка
-                        i4 = i3 - 1;
-                        z1[i3, 7] = z1[i4, 7];
-                        z1[i3, 8] = z1[i4, 8];
-                    }
-                    //метка 73
-                    z1[1, 7] = C;
-                    z1[1, 8] = d[K];
+                    P2C.Push(C);
+                    P2D.Push(d[K]);
                 }
                 ai++;
-                if (ai > nmax){repit = false;}
-                if (Math.Abs(omax - omin) < eps)   { repit = false; } // Тут нужно и дти на метку 11 но ее нет
+
+                if (ai > nmax){repit = false; ai--; }
+                if (Math.Abs(omax - omin) < eps){ repit = false; } // Тут нужно и дти на метку 11 но ее нет
             }
                 //печать i3,ai,ai2,ai3,ai4
-                double F = (omax + omin) / 2;
+                 double F = (omax + omin) / 2;
                 //печать f, omax, omin
+            Stack< double> X1= new Stack< double>();
+            Stack< double> Y1= new Stack< double>();
+            Stack< double> X2= new Stack< double>();
+            Stack< double> Y2= new Stack< double>();
                 for(int i = 0; i < n; i++)
                 {
-                    z1[i, 1] = x1[i];
-                    z1[i, 2] = c4 + (i - 1) * dy;
-                    z1[i, 3] = y1[i];
-                    z1[i, 4] = c2 + (i - 1) * dx;
+                    X1.Push(x1[i]);
+                    Y1.Push(c4 + (i - 1) * dy);
+                    X2.Push(y1[i]);
+                    Y2.Push(c2 + (i - 1) * dx);
                 }
             //вывод констант 
             textBox8.Multiline = true;
             textBox8.Text = "Вычисленные значения:" + Environment.NewLine;
-            textBox8.Text += "i3 = " + i3 +  "; ai = " + ai + "; ai1 = " + ai1 + "; ai2 = " + ai2 + "; ai3 = " + ai3 + "; ai4 = " + ai4 + Environment.NewLine;
-            textBox8.Text += "f = " + F + "; omax" + omax + "; omin = " + omin +  Environment.NewLine;
+           // textBox8.Text += "i3 = " + i3 +  "; ai = " + ai + "; ai1 = " + ai1 + "; ai2 = " + ai2 + "; ai3 = " + ai3 + "; ai4 = " + ai4 + Environment.NewLine;
+            textBox8.Text += "Тактов вычисления = " + ai + "; Последнее изменение Omax = " + ai1 + "; Кол-во изменений Omax = " + ai3 + "; Последнее изменение Omin = " + ai2 + "; Кол-во изменений Omin = " + ai4 + Environment.NewLine;
+            textBox8.Text += "Среднее = " + F + "; omax = " + omax + "; omin = " + omin +  Environment.NewLine;
             //Вывод массива
-            textBox8.Text += "Полученная матрица:" + Environment.NewLine;
-            for (int i = 0; i < n; i++) // поправка 
+            textBox8.Text += "Результаты:" + Environment.NewLine;
+
+            textBox8.Text += "Игрок 1 (D): ";
+            for (;P1D.Count!=0;)
             {
-                for (int j = 0; j < 9; j++) // поправка
-                {
-                    textBox8.Text += z1[i, j] + " ";
-                }
-                    textBox8.Text += Environment.NewLine;
+            textBox8.Text += P1D.Pop() + " ";
+            }
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 1 (C): ";
+            for (;P1C.Count!=0;)
+            {
+                textBox8.Text += P1C.Pop() + " ";
+            }
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 2 (D): ";
+            for (;P2D.Count!=0;)
+            {
+            textBox8.Text += P2D.Pop() + " ";
+            }
+            
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 2 (C): ";
+            for (;P2C.Count!=0;)
+            {
+                textBox8.Text +=P2C.Pop() + " ";
+            }
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 1 (В.С/кол-во выб): ";
+            for (;X1.Count!=0;)
+            {
+                textBox8.Text += X1.Pop() + " ";
+            }
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 1 (?): ";
+            for (;Y1.Count!=0;)
+            {
+            textBox8.Text += Y1.Pop() + " ";
+            }
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 2 (В.С/кол-во выб): ";
+            for (;X2.Count!=0;)
+            {
+                textBox8.Text += X2.Pop() + " ";
+            }
+            textBox8.Text += Environment.NewLine;
+            textBox8.Text += "Игрок 1 (?): ";
+            for (;Y2.Count!=0;)
+            {
+            textBox8.Text += Y2.Pop() + " ";
             }
             //переменные для нахождения максимина и минимакса нужно искать по матрице A1!!
             double maxmin = 0, minmax = 0, local_min_j = 0, local_max_i = 0;
@@ -222,6 +260,9 @@ namespace Theory_of_game
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "MinMax = " + minmax + ";  MaxMin = " + maxmin;
             textBox8.Text += Environment.NewLine;
+
+            // forma = new Form2(a1);
+            // forma.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
