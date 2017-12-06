@@ -1,6 +1,6 @@
 ﻿namespace Theory_of_game
 {
-    partial class Form2
+    partial class Matrix
     {
         /// <summary>
         /// Required designer variable.
@@ -33,25 +33,19 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.ForeColor = System.Drawing.Color.Black;
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Location = new System.Drawing.Point(16, 18);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(341, 312);
+            this.textBox1.Size = new System.Drawing.Size(376, 339);
             this.textBox1.TabIndex = 0;
             // 
-            // Form2
+            // Matrix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(365, 336);
+            this.ClientSize = new System.Drawing.Size(406, 373);
             this.Controls.Add(this.textBox1);
-            this.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Name = "Form2";
-            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Name = "Matrix";
             this.Text = "Матрица А";
             this.ResumeLayout(false);
             this.PerformLayout();

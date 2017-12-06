@@ -10,18 +10,18 @@ using System.Windows.Forms;
 
 namespace Theory_of_game
 {
-    public partial class Form2 : Form
+    public partial class Matrix : Form
     {
-        public Form2(double[,] A)
+        public Matrix(double[,] A)
         {
             InitializeComponent();
-         
-            for(int i=0, j=0; j < A.GetLength(1);)
+            for (int i = 0, j = 0; j < A.GetLength(1);)
             {
                 textBox1.Text += A[i, j] + " ";
                 i++;
                 if (i == A.GetLength(0)) { i = 0; j++; textBox1.Text += Environment.NewLine; }
             }
         }
+
     }
 }
