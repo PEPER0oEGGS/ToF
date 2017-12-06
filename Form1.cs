@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Theory_of_game
 {
@@ -18,7 +19,7 @@ namespace Theory_of_game
         }
 
         Formula formula = new Formula();
-
+        double[,] a1; int n;
 
         public double funk(double wx, double wy)
         {
@@ -29,7 +30,7 @@ namespace Theory_of_game
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            int n = 0, nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
+            n = 0; int nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
             double eps = 0;
             string function = textBox9.Text;
             Reader reader = new Reader();
@@ -39,10 +40,14 @@ namespace Theory_of_game
             n = int.Parse(textBox1.Text);
             nmax = int.Parse(textBox2.Text);
             eps = double.Parse(textBox3.Text);
-            c1 = int.Parse(textBox4.Text);
-            c2 = int.Parse(textBox5.Text);
-            c3 = int.Parse(textBox6.Text);
-            c4 = int.Parse(textBox7.Text);
+            if (true)//extBox10.Text == null)//при загрузке матрицы нам это не нужно
+            {
+                c1 = int.Parse(textBox4.Text);
+                c2 = int.Parse(textBox5.Text);
+                c3 = int.Parse(textBox6.Text);
+                c4 = int.Parse(textBox7.Text);
+            }
+            if (textBox10.Text != "") { f_load_matrix(n); }
             //Объявление основных используемых переменных
             double[] x = new double[n];
             double[] x1 = new double[n];
@@ -54,17 +59,22 @@ namespace Theory_of_game
             double[] y2 = new double[n];
             double[] d = new double[n];
             double[,] z1 = new double[n,9];
-            double[,] a1 = new double[n,n];
+            if (textBox10.Text == "")
+            {
+                a1 = new double[n, n];
+            }
             int ai = 1, ai1 = 0, ai2 = 0, ai3 = 0, ai4 = 0;
             double dx = (c2 - c1) / (n - 1), dy = (c4 - c3) / (n - 1);
             int i3=-1, i4;
-
-            for (int i=0; i < n; i++)
+            if (textBox10.Text == "")
             {
-                for (int j =0; j < n; j++)
+                for (int i = 0; i < n; i++)
                 {
-                    a1[i,j]=funk(c1 + (c2 - c1) * (i - 1), c3 + (c4 - c3) * (j - 1));
-                } //функция выбирается через checkbox
+                    for (int j = 0; j < n; j++)
+                    {
+                        a1[i, j] = funk(c1 + (c2 - c1) * (i - 1), c3 + (c4 - c3) * (j - 1));
+                    } //функция выбирается через checkbox
+                }
             }
            
             // метка 57 (Собираем массив А)
@@ -221,6 +231,8 @@ namespace Theory_of_game
             textBox8.Text += "nmax - максимальное количество игр;eps - погрешность расчета;" + Environment.NewLine;
             textBox8.Text += "c1, c2, c3, c4 - коэффициенты уравнения;" + Environment.NewLine;
             textBox8.Text += "Z(x,y) - функция расчета элементов;" + Environment.NewLine;
+            textBox8.Text += "В программе существует возможность загрузить матрицу из внешного файла." + Environment.NewLine;
+            textBox8.Text += "Для загрузки необходимо переместить файл с матрицей в директорию с исполняемым файлом и ввести название файла в соответствующую графу." + Environment.NewLine;
             /*textBox8.Text += "" + Environment.NewLine;
             textBox8.Text += "" + Environment.NewLine;
             textBox8.Text += "" + Environment.NewLine;
@@ -229,9 +241,96 @@ namespace Theory_of_game
             textBox8.Text += "" + Environment.NewLine;
             textBox8.Text += "" + Environment.NewLine;
             textBox8.Text += "" + Environment.NewLine;
-            textBox8.Text += "" + Environment.NewLine;
-            textBox8.Text += "" + Environment.NewLine;
             textBox8.Text += "" + Environment.NewLine;*/
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            /*load_matrix = true;
+            //Получение имени файла
+            string file_name = textBox10.Text;
+            file_name += ".txt";
+            //Получение адреса файла для подключения
+            string adress = get_adress(file_name);
+            string matrix_string = "";
+            //чтение файла
+            System.IO.StreamReader file = new System.IO.StreamReader(@adress);
+            string line;            
+            for (int i = 0; (line = file.ReadLine()) != null; i++)
+            {            
+                matrix_string += line;                
+            }
+            string n_s = textBox1.Text;
+            n = Convert.ToInt32(n_s);
+            int inc = 0;
+            a1 = new double[n, n];
+            String[] arr_srt_number = matrix_string.Split(' ');
+            foreach (string element in arr_srt_number)
+            {
+                a1[(inc/n),(inc%n)] = Convert.ToInt32(element); inc++;
+            }
+            /*
+            char[] mat_char = matrix_string.ToCharArray(0, matrix_string.Length);
+            for (int i = 0; i < n; i++)
+            {
+                //переменная для прохода символьного массива
+                int k = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if ((mat_char[i * n + k] == ' ')) { k++; }
+                    if ((mat_char[i * n + k] == '\n') || (mat_char[i * n + k] == '\r')) { k += 2; }
+                    if ((mat_char[i * n + k] != '\n') && (mat_char[i * n + k] != '\r') && (mat_char[i * n + k] != ' '))
+                    {
+                        if (mat_char[i * n + k] == '-') { a1[i, j] = (-1)*(int)Char.GetNumericValue(mat_char[i * n + k+1]); }
+                        else { a1[i, j] = (int)Char.GetNumericValue(mat_char[i * n + k]); }
+                    }
+                    //if ((map_char[i * y_range + k] == '\n') || (map_char[i * y_range + k] == '\r')) { k--; }
+                    k++;
+                }
+                
+                //while()
+                //button3_Click(object sender, EventArgs e);
+                
+            }
+            
+            textBox10.Text = "Матрица загружена";*/
+        }
+
+        private string get_adress(string file_name)
+        {
+            string adress = Path.GetFullPath(file_name);
+            return adress;
+        }
+
+        private void f_load_matrix(int n)
+        {            
+            //Получение имени файла
+            string file_name = textBox10.Text;
+            file_name += ".txt";
+            //Получение адреса файла для подключения
+            string adress = get_adress(file_name);
+            string matrix_string = "";
+            //чтение файла
+            System.IO.StreamReader file = new System.IO.StreamReader(@adress);
+            string line;
+            for (int i = 0; (line = file.ReadLine()) != null; i++)
+            {
+                matrix_string += line + " ";
+            }
+            //string n_s = textBox1.Text;
+            //n = Convert.ToInt32(n_s);
+            int inc = 0;
+            a1 = new double[n, n];
+            String[] arr_srt_number = matrix_string.Split(' ');
+            foreach (string element in arr_srt_number)
+            {
+                try
+                {
+                    a1[(inc / n), (inc % n)] = Convert.ToInt32(element); inc++;
+                }
+                catch { }
+            }
+            textBox10.Text = "Матрица загружена";
         }
     }
 }
