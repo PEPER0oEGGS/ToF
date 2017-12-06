@@ -305,5 +305,10 @@ namespace Theory_of_game
             textBox8.Text += "" + Environment.NewLine;
             textBox8.Text += "" + Environment.NewLine;*/
         }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
