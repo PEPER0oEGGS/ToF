@@ -17,7 +17,7 @@ namespace Theory_of_game
             InitializeComponent();
             for (int i = 0, j = 0; j < A.GetLength(1);)
             {
-                textBox1.Text += A[i, j] + " ";
+                textBox1.Text += A[j, i] + " ";
                 i++;
                 if (i == A.GetLength(0)) { i = 0; j++; textBox1.Text += Environment.NewLine; }
             }
