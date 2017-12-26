@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+//using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -215,13 +215,13 @@ namespace Theory_of_game
             textBox8.Text += "Игрок 1 (Выборы столбцов): ";
             for (;X1.Count!=0;)
             {
-                textBox8.Text += X1.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                textBox8.Text += Math.Round(X1.Dequeue()/nmax, 3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 2 (Выборы строк): ";
             for (; X2.Count != 0;)
             {
-                textBox8.Text += X2.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                textBox8.Text += Math.Round(X2.Dequeue()/nmax, 3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 1 (c4 + (i - 1) * dy): ";
