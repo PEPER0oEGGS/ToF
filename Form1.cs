@@ -190,26 +190,26 @@ namespace Theory_of_game
             textBox8.Text += "Игрок 1 (D): ";
             for (;P1D.Count!=0;)
             {
-            textBox8.Text += P1D.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+            textBox8.Text += Math.Round(P1D.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 1 (C): ";
             for (;P1C.Count!=0;)
             {
-                textBox8.Text += P1C.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                textBox8.Text += Math.Round(P1C.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 2 (D): ";
             for (;P2D.Count!=0;)
             {
-            textBox8.Text += P2D.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+            textBox8.Text += Math.Round(P2D.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 2 (C): ";
             for (;P2C.Count!=0;)
             {
-                textBox8.Text +=P2C.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                textBox8.Text += Math.Round(P2C.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 1 (Выборы столбцов): ";
@@ -227,13 +227,13 @@ namespace Theory_of_game
             textBox8.Text += "Игрок 1 (c4 + (i - 1) * dy): ";
             for (;Y1.Count!=0;)
             {
-            textBox8.Text += Y1.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+            textBox8.Text += Math.Round(Y1.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
-            textBox8.Text += "Игрок 1 (c2 + (i - 1) * dx): ";
+            textBox8.Text += "Игрок 2 (c2 + (i - 1) * dx): ";
             for (;Y2.Count!=0;)
             {
-            textBox8.Text += Y2.Dequeue() + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+            textBox8.Text += Math.Round(Y2.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             //переменные для нахождения максимина и минимакса нужно искать по матрице A1!!
             double maxmin = 0, minmax = 0, local_min_j = 0, local_max_i = 0;
