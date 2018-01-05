@@ -190,6 +190,7 @@
             this.textBox8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox8.Multiline = true;
             this.textBox8.Name = "textBox8";
+            this.textBox8.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox8.Size = new System.Drawing.Size(471, 382);
             this.textBox8.TabIndex = 16;
             // 
@@ -224,7 +225,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(365, 193);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(165, 28);
             this.button3.TabIndex = 20;
@@ -235,7 +236,7 @@
             // textBox10
             // 
             this.textBox10.Location = new System.Drawing.Point(37, 194);
-            this.textBox10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox10.Margin = new System.Windows.Forms.Padding(4);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(319, 22);
             this.textBox10.TabIndex = 21;

@@ -59,6 +59,7 @@ namespace Theory_of_game
             double[] y2 = new double[n];
             double[] d = new double[n];
             double[,] z1 = new double[n,9];
+            double[] mass_ocen = new double[nmax];
             
             Queue< double> P1C = new Queue< double> ();
             Queue< double>  P1D= new Queue< double> ();
@@ -96,7 +97,8 @@ namespace Theory_of_game
             int I=0; // инициализация константы со строкой.
             double C=0;
             int K=0; // надо сейвить до цикла
-             //baka! Не юзай метки
+                     //baka! Не юзай метки
+            int ind_mass = 0;
             for (bool repit = true; repit;)
             {
                 I = 0; // Выбрали первый элемент столбца 
@@ -121,10 +123,10 @@ namespace Theory_of_game
                 // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ omax1 omin1
 
 
-                omax1 = pc[I] / ai; //Уточнили условия в начале min U(n))/n  
-                omin1 = fi[J] / ai; //Уточнили условия в начале max V(n))/n
-
-               if ((omax - omax1) >= 0) //  зачем то сравниваем начальные условия  
+                omax1 = Math.Round(pc[I] / ai, 5); //Уточнили условия в начале min U(n))/n  
+                omin1 = Math.Round(fi[J] / ai, 5); //Уточнили условия в начале max V(n))/n
+                                                   //если что - убрать модуль в условии
+                if (Math.Abs(omax - omax1) >= 0) //  зачем то сравниваем начальные условия  
                 {
                     omax = omax1; // уточнили начальное условие  
                     ai1 = ai; //Запомнили ПОСЛЕДНИЙ такт на котором было изменение 
@@ -132,7 +134,7 @@ namespace Theory_of_game
                     C = 0; K = 0; //поправка на счет с нуля 
                     for (int i = 0; i < n; i++) //(i2) поправка на счет с нуля 
                     {
-                        x1[i] = x[i] / ai;   // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                        x1[i] = Math.Round(x[i] / ai, 5);   // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                         d[i] = Math.Abs(x1[i] - x2[i]); // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                         C += d[i]; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                         x2[i] = x1[i]; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
@@ -144,14 +146,15 @@ namespace Theory_of_game
                     //Запомнили минимумы
 
                 }
-                if ((omin - omin1) <= 0)
+                //если что - убрать модуль в условии и знак был <=
+                if (Math.Abs(omin - omin1) >= 0)
                 {
                     omin = omin1;
                     ai2 = ai; ai4++;
                     C = 0;  K = 0;
                     for (int i = 0; i < n; i++) 
                     {
-                        y1[i] = y[i] / ai; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                        y1[i] = Math.Round(y[i] / ai,5); // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                         d[i] = Math.Abs(y1[i] - y2[i]); // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                         C += d[i]; y2[i] = y1[i]; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                         if (d[i] > d[K]) K = i; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
@@ -161,9 +164,11 @@ namespace Theory_of_game
                     P2D.Enqueue(d[K]);
                 }
                 ai++;
-
+                mass_ocen[ind_mass] = Math.Abs(omax - omin);
+                ind_mass++;
                 if (ai > nmax){repit = false; ai--; }
-                if (Math.Abs(omax - omin) < eps){ repit = false; }
+                if (Math.Abs(omax - omin) < eps)
+                { repit = false; }
             }
                 //печать i3,ai,ai2,ai3,ai4
                  double F = (omax + omin) / 2;
@@ -266,6 +271,11 @@ namespace Theory_of_game
 
             forma = new Matrix(a1);
             forma.ShowDialog();
+            //массив оценок
+            foreach (double element in mass_ocen)
+            {
+                textBox8.Text += Math.Round(element, 3) + "; ";
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
