@@ -30,6 +30,7 @@ namespace Theory_of_game
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            DateTime time1 = DateTime.Now;
             n = 0; int nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
             double eps = 0;
             string function = textBox9.Text;
@@ -61,10 +62,7 @@ namespace Theory_of_game
             double[,] z1 = new double[n,9];
             double[] mass_ocen = new double[nmax];
             
-            Queue< double> P1C = new Queue< double> ();
-            Queue< double>  P1D= new Queue< double> ();
-            Queue< double> P2C= new Queue< double>();
-            Queue< double>  P2D= new Queue< double> ();
+            
             double omax1;
             double omin1;
 
@@ -141,8 +139,7 @@ namespace Theory_of_game
                         if (d[i] > d[K]){ K = i; }  // выбрали минимальный К // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                     }
                     //метка 7
-                    P1C.Enqueue(C);
-                    P1D.Enqueue(d[K]);
+                    
                     //Запомнили минимумы
 
                 }
@@ -160,8 +157,7 @@ namespace Theory_of_game
                         if (d[i] > d[K]) K = i; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
                     } //метка 10
 
-                    P2C.Enqueue(C);
-                    P2D.Enqueue(d[K]);
+                   
                 }
                 ai++;
                 mass_ocen[ind_mass] = Math.Abs(omax - omin);
@@ -187,59 +183,25 @@ namespace Theory_of_game
             //вывод констант 
             textBox8.Multiline = true;
             textBox8.Text = "Вычисленные значения:" + Environment.NewLine;
-            textBox8.Text += "Тактов вычисления = " + ai + "; Последнее изменение Omax = " + ai1 + "; Кол-во изменений Omax = " + ai3 + "; Последнее изменение Omin = " + ai2 + "; Кол-во изменений Omin = " + ai4 + Environment.NewLine;
+            textBox8.Text += "Тактов вычисления выполнено: " + ai + "/" + nmax + Environment.NewLine;
             textBox8.Text += "Среднее = " + F + "; omax = " + omax + "; omin = " + omin +  Environment.NewLine;// ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             //Вывод массива
             textBox8.Text += "Результаты:" + Environment.NewLine;
 
-            textBox8.Text += "Игрок 1 (D): ";
-            for (;P1D.Count!=0;)
-            {
-            textBox8.Text += Math.Round(P1D.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
-            }
-            textBox8.Text += Environment.NewLine;
-            textBox8.Text += "Игрок 1 (C): ";
-            for (;P1C.Count!=0;)
-            {
-                textBox8.Text += Math.Round(P1C.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
-            }
-            textBox8.Text += Environment.NewLine;
-            textBox8.Text += "Игрок 2 (D): ";
-            for (;P2D.Count!=0;)
-            {
-            textBox8.Text += Math.Round(P2D.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
-            }
-            
-            textBox8.Text += Environment.NewLine;
-            textBox8.Text += "Игрок 2 (C): ";
-            for (;P2C.Count!=0;)
-            {
-                textBox8.Text += Math.Round(P2C.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
-            }
-            textBox8.Text += Environment.NewLine;
+           
             textBox8.Text += "Игрок 1 (Выборы столбцов): ";
             for (;X1.Count!=0;)
             {
-                textBox8.Text += Math.Round(X1.Dequeue()/nmax, 3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                textBox8.Text += Math.Round(X1.Dequeue()/ai, 3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
             textBox8.Text += "Игрок 2 (Выборы строк): ";
             for (; X2.Count != 0;)
             {
-                textBox8.Text += Math.Round(X2.Dequeue()/nmax, 3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
+                textBox8.Text += Math.Round(X2.Dequeue()/ai, 3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             }
             textBox8.Text += Environment.NewLine;
-            textBox8.Text += "Игрок 1 (c4 + (i - 1) * dy): ";
-            for (;Y1.Count!=0;)
-            {
-            textBox8.Text += Math.Round(Y1.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
-            }
-            textBox8.Text += Environment.NewLine;
-            textBox8.Text += "Игрок 2 (c2 + (i - 1) * dx): ";
-            for (;Y2.Count!=0;)
-            {
-            textBox8.Text += Math.Round(Y2.Dequeue(),3) + " "; // ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
-            }
+            
             //переменные для нахождения максимина и минимакса нужно искать по матрице A1!!
             double maxmin = 0, minmax = 0, local_min_j = 0, local_max_i = 0;
             //поиск наибольшего минимума
@@ -269,6 +231,10 @@ namespace Theory_of_game
             textBox8.Text += "MinMax = " + minmax + ";  MaxMin = " + maxmin;
             textBox8.Text += Environment.NewLine;
 
+
+            DateTime time2 = DateTime.Now;
+            textBox8.Text += "Время работы (миллисекунд)" + (time2 - time1).Milliseconds + Environment.NewLine;
+
             forma = new Matrix(a1);
             forma.ShowDialog();
             //массив оценок
@@ -276,6 +242,7 @@ namespace Theory_of_game
             {
                 textBox8.Text += Math.Round(element, 3) + "; ";
             }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
