@@ -47,6 +47,7 @@ namespace Theory_of_game
             double[] y = new double[n];
             double[] pc = new double[n];
             double[] fi = new double[n];
+            double[] mass_ocen = new double[nmax];
            
             double omax1;
             double omin1;
