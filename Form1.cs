@@ -66,7 +66,7 @@ namespace Theory_of_game
                 {
                     for (int j = 0; j < n; j++)
                     {
-                        a1[i, j] = funk(4, 3);
+                        a1[i, j] = funk(i+1, j+1);
                     } //функция выбирается через checkbox
                 }
             }
