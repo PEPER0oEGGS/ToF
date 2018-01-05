@@ -1,5 +1,7 @@
-﻿namespace Theory_of_game
+﻿using System;
+namespace Theory_of_game
 {
+   
     public class Calkuer
     {
         Formula formula = new Formula();
@@ -38,7 +40,11 @@
       * 7-/
       * 8-^
       * 9-(
-      * 10-)
+      * 10-) не используется
+      * 11 sin
+      * 12 cos
+      * 13 abc
+      * 14 sqrt
       * дополнить функции
       */
             switch (formula.Simbol[mark])
@@ -81,11 +87,29 @@
                     if (Atupe && Btupe) { return (formula.constants[-formula.A[mark]] + formula.constants[-formula.B[mark]]); }
                     if (Atupe && !Btupe) { return (formula.constants[-formula.A[mark]] + bufer[formula.B[mark]]); }
                     break;
-                case -10:
-                    if (!Atupe && !Btupe) { return (bufer[formula.A[mark]] + bufer[formula.B[mark]]); }
-                    if (!Atupe && Btupe) { return (bufer[formula.A[mark]] + formula.constants[-formula.B[mark]]); }
-                    if (Atupe && Btupe) { return (formula.constants[-formula.A[mark]] + formula.constants[-formula.B[mark]]); }
-                    if (Atupe && !Btupe) { return (formula.constants[-formula.A[mark]] + bufer[formula.B[mark]]); }
+                case -11:
+                    if (!Atupe && !Btupe) { return (bufer[formula.A[mark]] + Math.Sin(bufer[formula.B[mark]])); }
+                    if (!Atupe && Btupe) { return (bufer[formula.A[mark]] + Math.Sin(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && Btupe) { return (formula.constants[-formula.A[mark]] + Math.Sin(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && !Btupe) { return (formula.constants[-formula.A[mark]] + Math.Sin(bufer[formula.B[mark]])); }
+                    break;
+                case -12:
+                    if (!Atupe && !Btupe) { return (bufer[formula.A[mark]] + Math.Cos(bufer[formula.B[mark]])); }
+                    if (!Atupe && Btupe) { return (bufer[formula.A[mark]] + Math.Cos(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && Btupe) { return (formula.constants[-formula.A[mark]] + Math.Cos(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && !Btupe) { return (formula.constants[-formula.A[mark]] + Math.Cos(bufer[formula.B[mark]])); }
+                    break;
+                case -14:
+                    if (!Atupe && !Btupe) { return (bufer[formula.A[mark]] + Math.Sqrt(bufer[formula.B[mark]])); }
+                    if (!Atupe && Btupe) { return (bufer[formula.A[mark]] + Math.Sqrt(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && Btupe) { return (formula.constants[-formula.A[mark]] + Math.Sqrt(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && !Btupe) { return (formula.constants[-formula.A[mark]] + Math.Sqrt(bufer[formula.B[mark]])); }
+                    break;
+                case -13:
+                    if (!Atupe && !Btupe) { return (bufer[formula.A[mark]] + Math.Abs(bufer[formula.B[mark]])); }
+                    if (!Atupe && Btupe) { return (bufer[formula.A[mark]] + Math.Abs(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && Btupe) { return (formula.constants[-formula.A[mark]] + Math.Abs(formula.constants[-formula.B[mark]])); }
+                    if (Atupe && !Btupe) { return (formula.constants[-formula.A[mark]] + Math.Abs(bufer[formula.B[mark]])); }
                     break;
             }
             return (0);

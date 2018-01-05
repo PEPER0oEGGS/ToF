@@ -13,7 +13,7 @@ namespace Theory_of_game
        // string imput = "x^(2*sin(y+3)-5)-sin(sqrt(2*y^2))"; как выучим синусы будем это считать
         string imput = "x^(2*(y+3)-54)-((2*y^2))";
         int reading_mark = 0;
-        int[] read = new int[1000];
+        double[] read = new double[1000];
         //метод для изменения строки
         public void input_string(string input)
         {
@@ -27,7 +27,7 @@ namespace Theory_of_game
                 if (imput[reading_mark] == 'x') { read[mark] = -1; reading_mark++; mark++; }
                 else
                 {
-                    if (imput[reading_mark] == 'y') { read[reading_mark] = -2; reading_mark++; mark++; }
+                    if (imput[reading_mark] == 'y') { read[mark] = -2; reading_mark++; mark++; }
                     else
                     {
                         if (imput[reading_mark] == '1' || imput[reading_mark] == '2' || imput[reading_mark] == '3' || imput[reading_mark] == '4' || imput[reading_mark] == '5' || imput[reading_mark] == '6' || imput[reading_mark] == '7' || imput[reading_mark] == '8' || imput[reading_mark] == '9' || imput[reading_mark] == '0') { read[mark] = readNunber(); reading_mark++; mark++; }
@@ -42,7 +42,7 @@ namespace Theory_of_game
           return (yrav);
         }
 
-        int readNunber()
+        double readNunber()
         {
 
             string number = "";
@@ -51,11 +51,11 @@ namespace Theory_of_game
             {
                 number = number + imput[reading_mark];
                 if (reading_mark + 1 == imput.Length){ break; }
-                if (imput[reading_mark + 1] == '1' || imput[reading_mark + 1] == '2' || imput[reading_mark + 1] == '3' || imput[reading_mark + 1] == '4' || imput[reading_mark + 1] == '5' || imput[reading_mark + 1] == '6' || imput[reading_mark + 1] == '7' || imput[reading_mark + 1] == '8' || imput[reading_mark + 1] == '9' || imput[reading_mark + 1] == '0') { reading_mark++; }
+                if (imput[reading_mark + 1] == '1' || imput[reading_mark + 1] == '2' || imput[reading_mark + 1] == '3' || imput[reading_mark + 1] == '4' || imput[reading_mark + 1] == '5' || imput[reading_mark + 1] == '6' || imput[reading_mark + 1] == '7' || imput[reading_mark + 1] == '8' || imput[reading_mark + 1] == '9' || imput[reading_mark + 1] == '0'|| imput[reading_mark + 1] == ',') { reading_mark++; }
                 else { break; }
             }
 
-            return (int.Parse(number));
+            return (double.Parse(number));
 
         }
 
@@ -73,6 +73,10 @@ namespace Theory_of_game
              * 8-^
              * 9-(
              * 10-)
+             * 11 sin
+             * 12 cos 
+             * 13 abc
+             * 14 sqrt
              * дополнить функции
              */
             if (imput[reading_mark] == '+') { return (-4); }
@@ -81,7 +85,26 @@ namespace Theory_of_game
             if (imput[reading_mark] == '/') { return (-7); }
             if (imput[reading_mark] == '^') { return (-8); }
             if (imput[reading_mark] == '(') { return (-9); }
-            if (imput[reading_mark] == ')') { return (-10); }
+            if (imput[reading_mark] == ')') { return (-10);}
+
+            if (imput[reading_mark] == 's') {reading_mark++;
+            if (imput[reading_mark] == 'i') {reading_mark++; 
+            if (imput[reading_mark] == 'n') {reading_mark++; 
+            return (-11); }}
+            if (imput[reading_mark] == 'q') { reading_mark++;
+            if (imput[reading_mark] == 'r') { reading_mark++;
+            if (imput[reading_mark] == 't') { reading_mark++;
+            return (-14); }}}
+            }
+            if (imput[reading_mark] == 'c') {reading_mark++;
+            if (imput[reading_mark] == 'o') {reading_mark++;
+            if (imput[reading_mark] == 's') {reading_mark++;
+            return (-12); }}}
+            if (imput[reading_mark] == 'a') {reading_mark++;
+            if (imput[reading_mark] == 'b') {reading_mark++;
+            if (imput[reading_mark] == 's') {reading_mark++;
+            return (-13); }}}
+            
             // тут вернуть синусы косинусы итд
             return (3); // ошибка чтения
         }
@@ -89,6 +112,25 @@ namespace Theory_of_game
         
         void listCreated(int markofmass)
         {
+                        /* 
+             * С минусом, только числа без минуса
+             * 1-x
+             * 2-y
+             * 3-число
+             * 4-+
+             * 5--
+             * 6-*
+             * 7-/
+             * 8-^
+             * 9-(
+             * 10-)
+             * 11 sin
+             * 12 cos 
+             * 13 abc
+             * 14 sqrt
+             * дополнить функции
+             */
+
             int byffermark = 1;// текущая константа 
             yrav.startconstant();
             Stack<int> stack = new Stack<int>(); // стек последней констант
@@ -111,9 +153,9 @@ namespace Theory_of_game
                     }
                     else
                     {
-                        if (read[mark] == -9)// открывабщаяся скобка в синусе корне итд *(
+                        if (read[mark] == -9 || read[mark] == -11 || read[mark] == -12 || read[mark] == -13 || read[mark] == -14 )// открывабщаяся скобка в синусе корне итд *(
                         { stack.Push(byffermark); }
-                        yrav.Simbol.Add(read[mark]);
+                        yrav.Simbol.Add((int)read[mark]);
                         byffermark++;
                         yrav.B.Add(byffermark);
                     }
@@ -146,7 +188,7 @@ namespace Theory_of_game
                     }
                     else
                     {
-                        yrav.Simbol.Add(read[mark]);
+                        yrav.Simbol.Add((int)read[mark]);
                         byffermark++;
                         mark++;
                         yrav.B.Add(byffermark);
@@ -180,7 +222,7 @@ namespace Theory_of_game
                     }
                     else
                     {
-                        yrav.Simbol.Add(read[mark]);
+                        yrav.Simbol.Add((int)read[mark]);
                         byffermark++;
                         mark++;
                         yrav.B.Add(byffermark);
@@ -215,7 +257,7 @@ namespace Theory_of_game
                     }
                     else
                     {
-                        yrav.Simbol.Add(read[mark]);
+                        yrav.Simbol.Add((int)read[mark]);
                         byffermark++;
                         mark++;
                         yrav.B.Add(byffermark);
