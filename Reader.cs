@@ -24,21 +24,12 @@ namespace Theory_of_game
             int mark = 0;
             for (; reading_mark < imput.Length;)
             {
-                if (imput[reading_mark] == 'x') { read[mark] = -1; reading_mark++; mark++; }
-                else
-                {
-                    if (imput[reading_mark] == 'y') { read[mark] = -2; reading_mark++; mark++; }
-                    else
-                    {
-                        if (imput[reading_mark] == '1' || imput[reading_mark] == '2' || imput[reading_mark] == '3' || imput[reading_mark] == '4' || imput[reading_mark] == '5' || imput[reading_mark] == '6' || imput[reading_mark] == '7' || imput[reading_mark] == '8' || imput[reading_mark] == '9' || imput[reading_mark] == '0') { read[mark] = readNunber(); reading_mark++; mark++; }
-                        else
-                        {
-                            read[mark] = readSimbol(); reading_mark++; mark++;
-                        }
-                    }
-                }
+                if (imput[reading_mark] == '1' || imput[reading_mark] == '2' || imput[reading_mark] == '3' || imput[reading_mark] == '4' || imput[reading_mark] == '5' || imput[reading_mark] == '6' || imput[reading_mark] == '7' || imput[reading_mark] == '8' || imput[reading_mark] == '9' || imput[reading_mark] == '0') { read[mark] = readNunber(); reading_mark++; mark++; }
+                else{ read[mark] = readSimbol(); reading_mark++; mark++;}
             }
+
             listCreated(mark);
+
           return (yrav);
         }
 
@@ -59,13 +50,13 @@ namespace Theory_of_game
 
         }
 
-        int readSimbol()
+        double readSimbol()
         {
             /* 
              * С минусом, только числа без минуса
              * 1-x
              * 2-y
-             * 3-число
+             * 3 ошибка
              * 4-+
              * 5--
              * 6-*
@@ -79,6 +70,14 @@ namespace Theory_of_game
              * 14 sqrt
              * дополнить функции
              */
+
+            if (imput[reading_mark] == 'p') {
+                if (imput[reading_mark] == 'i')
+                {return (Math.PI);}
+            }
+            if (imput[reading_mark] == 'e'){ return (Math.E); }
+            if (imput[reading_mark] == 'x') { return (-1); }
+            if (imput[reading_mark] == 'y') { return (-2); }
             if (imput[reading_mark] == '+') { return (-4); }
             if (imput[reading_mark] == '-') { return (-5); }
             if (imput[reading_mark] == '*') { return (-6); }
@@ -112,7 +111,7 @@ namespace Theory_of_game
         
         void listCreated(int markofmass)
         {
-                        /* 
+            /* 
              * С минусом, только числа без минуса
              * 1-x
              * 2-y
@@ -153,7 +152,7 @@ namespace Theory_of_game
                     }
                     else
                     {
-                        if (read[mark] == -9 || read[mark] == -11 || read[mark] == -12 || read[mark] == -13 || read[mark] == -14 )// открывабщаяся скобка в синусе корне итд *(
+                        if (read[mark] == -9 || read[mark] == -11 || read[mark] == -12 || read[mark] == -13 || read[mark] == -14)// открывабщаяся скобка в синусе корне итд *(
                         { stack.Push(byffermark); }
                         yrav.Simbol.Add((int)read[mark]);
                         byffermark++;
