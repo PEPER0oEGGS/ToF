@@ -30,7 +30,8 @@ namespace Theory_of_game
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            n = 0; int nmax = 0;
+            DateTime time1 = DateTime.Now;
+            n = 0; int nmax = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
             double eps = 0;
             string function = textBox9.Text;
             Reader reader = new Reader();
@@ -46,6 +47,7 @@ namespace Theory_of_game
             double[] y = new double[n];
             double[] pc = new double[n];
             double[] fi = new double[n];
+            double[] mass_ocen = new double[nmax];
            
             double omax1;
             double omin1;
@@ -109,7 +111,7 @@ namespace Theory_of_game
             //вывод констант 
             textBox8.Multiline = true;
             textBox8.Text = "Вычисленные значения:" + Environment.NewLine;
-            textBox8.Text += "Тактов вычисления: " + ai + "/"+ nmax + Environment.NewLine;
+            textBox8.Text += "Тактов вычисления выполнено: " + ai + "/" + nmax + Environment.NewLine;
             textBox8.Text += "Среднее = " + F + "; omax = " + omax + "; omin = " + omin +  Environment.NewLine;// ДОЛЖНЫ БЫТЬ ДРОБНЫЕ
             //Вывод массива
             textBox8.Text += "Результаты:" + Environment.NewLine;
@@ -164,8 +166,18 @@ namespace Theory_of_game
             textBox8.Text += "MinMax = " + minmax + ";  MaxMin = " + maxmin;
             textBox8.Text += Environment.NewLine;
 
+
+            DateTime time2 = DateTime.Now;
+            textBox8.Text += "Время работы (миллисекунд)" + (time2 - time1).Milliseconds + Environment.NewLine;
+
             forma = new Matrix(a1);
             forma.ShowDialog();
+            //массив оценок
+            foreach (double element in mass_ocen)
+            {
+                textBox8.Text += Math.Round(element, 3) + "; ";
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
